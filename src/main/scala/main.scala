@@ -8,7 +8,5 @@ object Main {
     import yaol.utils._
     import yaol.generic._
 
-    val s = RandomSearch.search(Bound(-5.12,5.12),3, 1000)
-    println(s)
   }
 }
