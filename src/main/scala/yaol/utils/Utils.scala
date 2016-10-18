@@ -1,7 +1,9 @@
 /**
   * Created by Pedro on 13/10/2016.
   */
-package org.yaol.utils
+package yaol.utils
+
+import yaol.generic.Bound
 
 object Utils {
   def randomBounded(lowerBound:Double,upperBound:Double):Double =
@@ -9,4 +11,10 @@ object Utils {
 
   def randomVector(lowerBound:Double,upperBound:Double, dim:Int):Array[Double] =
     Array.tabulate(dim){ _  => randomBounded(lowerBound,upperBound) }
+
+  def randomBounded(bound: Bound):Double =
+    bound.lower + (scala.util.Random.nextDouble * (bound.upper - bound.lower))
+
+  def randomVector(bound:Bound, dim:Int):Array[Double] =
+    Array.tabulate(dim){ _  => randomBounded(bound) }
 }

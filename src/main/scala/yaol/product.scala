@@ -2,7 +2,7 @@
   * Created by Pedro on 09/10/2016.
   */
 
-package com.ecomm.product
+package yaol
 
 object Product{
 

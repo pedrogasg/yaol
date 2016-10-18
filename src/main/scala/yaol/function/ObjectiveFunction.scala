@@ -1,7 +1,7 @@
 /**
   * Created by Pedro on 13/10/2016.
   */
-package org.yaol.function
+package yaol.function
 
 object ObjectiveFunction {
   def deJongObjective(xs: Iterable[Double]):Double =

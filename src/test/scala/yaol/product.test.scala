@@ -1,7 +1,7 @@
 /**
   * Created by Pedro on 09/10/2016.
   */
-package com.ecomm.product
+package yaol
 
 import org.scalatest._
 
