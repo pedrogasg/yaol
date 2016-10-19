@@ -21,28 +21,31 @@ object AdaptiveRandomSearch {
     (Optimal(v,ObjectiveFunction.deJongObjective(v)), Optimal(largeV, ObjectiveFunction.deJongObjective(largeV)))
   }
 
-  def search(bound:Bound,  dim: Int, maxIteration: Int, firstFactor:Double, smallFactor:Double, largeFactor:Double, multiple:Int, noneImpouvement:Int):Optimal = {
+  private def lesserCost(size:Double, largeSize: Double, step: Optimal, largeStep: Optimal): (Optimal,Double) = {
+    if (step.cost >= largeStep.cost) (largeStep,largeSize) else (step,size)
+  }
+
+  private def initCurrentVector(bound:Bound, dim: Int, firstFactor:Double):(Optimal,Double) = {
     val v = Utils.randomVector(bound,dim)
+    (Optimal(v,ObjectiveFunction.deJongObjective(v)),(bound.upper - bound.lower) * firstFactor)
+  }
+
+  def search(bound:Bound, dim: Int, maxIteration: Int, firstFactor:Double, smallFactor:Double, largeFactor:Double, multiple:Int, noneImprouvement:Int):Optimal = {
     var count = 0
-    var size = (bound.upper - bound.lower) * firstFactor
-    var current = Optimal(v,ObjectiveFunction.deJongObjective(v))
-    for(i <- maxIteration){
+    var (current,size) = initCurrentVector(bound,dim, firstFactor)
+    for(i <- 0 to maxIteration){
       val largeSize = maxStepSize(i,size,smallFactor,largeFactor,multiple)
       val (step, largeStep) = walk(bound,current.vector,size,largeSize)
-      if( step.cost <= current.cost || largeStep.cost <= current.cost) {
-        if (step.cost >= largeStep.cost) {
-          current = largeStep
-          size = largeSize
-        } else current = step
-        count = 0
-      } else{
-        count =  count + 1
-        if(count >= noneImpouvement){
+      if (step.cost > current.cost && largeStep.cost > current.cost) {
+        count = count + 1
+        if (count >= noneImprouvement) {
           count = 0
           size = size / smallFactor
         }
+      } else {
+        (current, size) = lesserCost(size, largeSize, step, largeStep)
+        count = 0
       }
-
     }
     current
   }
