@@ -23,16 +23,26 @@ object AdaptiveRandomSearch {
 
   def search(bound:Bound,  dim: Int, maxIteration: Int, firstFactor:Double, smallFactor:Double, largeFactor:Double, multiple:Int, noneImpouvement:Int):Optimal = {
     val v = Utils.randomVector(bound,dim)
+    var count = 0
     var size = (bound.upper - bound.lower) * firstFactor
     var current = Optimal(v,ObjectiveFunction.deJongObjective(v))
     for(i <- maxIteration){
       val largeSize = maxStepSize(i,size,smallFactor,largeFactor,multiple)
-      (step, largeStep) = walk(bound,current.vector,size,largeSize)
-      if( step.cost <= current.cost || largeStep.cost <= current.cost)
-        if(step.cost >= largeStep.cost) {
+      val (step, largeStep) = walk(bound,current.vector,size,largeSize)
+      if( step.cost <= current.cost || largeStep.cost <= current.cost) {
+        if (step.cost >= largeStep.cost) {
           current = largeStep
           size = largeSize
+        } else current = step
+        count = 0
+      } else{
+        count =  count + 1
+        if(count >= noneImpouvement){
+          count = 0
+          size = size / smallFactor
         }
+      }
+
     }
     current
   }
