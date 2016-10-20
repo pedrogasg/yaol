@@ -9,13 +9,13 @@ import yaol.utils._
 
 object RandomSearch {
 
-  def search(bound: Bound, dim: Int, maxIteration: Int): Optimal = {
-    var best = Optimal(Array(), bound.upper)
+  def search(bound: Bound, dim: Int, maxIteration: Int): OptimalDouble = {
+    var best = OptimalDouble(Array(), bound.upper)
     for (i <- 0 to maxIteration) {
       val rv = Utils.randomVector(bound, dim)
       val cost = ObjectiveFunction.deJongObjective(rv)
       if (best.cost > cost)
-        best = Optimal(rv, cost)
+        best = OptimalDouble(rv, cost)
     }
     best
   }

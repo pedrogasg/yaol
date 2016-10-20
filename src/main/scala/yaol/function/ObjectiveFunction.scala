@@ -8,6 +8,6 @@ object ObjectiveFunction {
   def deJongObjective(xs: Iterable[Double]):Double =
     xs.foldLeft(0.0)((acc, x) => acc + (x * x))
 
-  def oneMax(xs: Iterable[Double]):Double =
-    xs.foldLeft(0.0)((acc, x) => acc + x)
+  def oneMax(xs: Iterable[Int]):Int =
+    xs.foldLeft(0)((acc, x) => acc + x)
 }

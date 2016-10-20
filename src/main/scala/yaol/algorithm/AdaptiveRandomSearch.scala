@@ -15,18 +15,18 @@ object AdaptiveRandomSearch {
   private def maxStepSize(i:Int, size:Double, smallFactor:Double, largeFactor:Double,multiple:Int):Double =
     if(i > 0 && i % multiple == 0) size * largeFactor else size * smallFactor
 
-  private def walk(bound:Bound, coordinates:Array[Double], size:Double, largeSize:Double):(Optimal,Optimal) = {
+  private def walk(bound:Bound, coordinates:Array[Double], size:Double, largeSize:Double):(OptimalDouble,OptimalDouble) = {
     val v = oneStep(bound,coordinates,size)
     val largeV = oneStep(bound, coordinates, largeSize)
-    (Optimal(v,ObjectiveFunction.deJongObjective(v)), Optimal(largeV, ObjectiveFunction.deJongObjective(largeV)))
+    (OptimalDouble(v,ObjectiveFunction.deJongObjective(v)), OptimalDouble(largeV, ObjectiveFunction.deJongObjective(largeV)))
   }
 
-  private def initCurrentVector(bound:Bound, dim: Int, firstFactor:Double):(Optimal,Double) = {
+  private def initCurrentVector(bound:Bound, dim: Int, firstFactor:Double):(OptimalDouble,Double) = {
     val v = Utils.randomVector(bound,dim)
-    (Optimal(v,ObjectiveFunction.deJongObjective(v)),(bound.upper - bound.lower) * firstFactor)
+    (OptimalDouble(v,ObjectiveFunction.deJongObjective(v)),(bound.upper - bound.lower) * firstFactor)
   }
 
-  def search(bound:Bound, dim: Int, maxIteration: Int, firstFactor:Double, smallFactor:Double, largeFactor:Double, multiple:Int, noneImprouvement:Int):Optimal = {
+  def search(bound:Bound, dim: Int, maxIteration: Int, firstFactor:Double, smallFactor:Double, largeFactor:Double, multiple:Int, noneImprouvement:Int):OptimalDouble = {
     var count = 0
     var (current,size) = initCurrentVector(bound,dim, firstFactor)
     for(i <- 0 to maxIteration){

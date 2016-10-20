@@ -18,4 +18,8 @@ object Utils {
   def randomVector(bound:Bound, dim:Int):Array[Double] =
     Array.tabulate(dim){ _  => randomBounded(bound) }
 
+  def randomBinary(dim:Int):Array[Int] =
+    Array.tabulate(dim){ _ => scala.util.Random.nextInt(2) }
+
+
 }
