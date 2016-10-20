@@ -4,6 +4,10 @@
 package yaol.function
 
 object ObjectiveFunction {
+
   def deJongObjective(xs: Iterable[Double]):Double =
     xs.foldLeft(0.0)((acc, x) => acc + (x * x))
+
+  def oneMax(xs: Iterable[Double]):Double =
+    xs.foldLeft(0.0)((acc, x) => acc + x)
 }

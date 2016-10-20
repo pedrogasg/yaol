@@ -22,7 +22,9 @@ project/target/
 *.sublime-workspace
 /.env
 atlassian-ide-plugin.xml
-
+.ensime
+.ensime_cache/
+*#
 # Mac OSX specific
 .DS_Store
 

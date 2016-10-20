@@ -21,10 +21,6 @@ object AdaptiveRandomSearch {
     (Optimal(v,ObjectiveFunction.deJongObjective(v)), Optimal(largeV, ObjectiveFunction.deJongObjective(largeV)))
   }
 
-  private def lesserCost(size:Double, largeSize: Double, step: Optimal, largeStep: Optimal): (Optimal,Double) = {
-    if (step.cost >= largeStep.cost) (largeStep,largeSize) else (step,size)
-  }
-
   private def initCurrentVector(bound:Bound, dim: Int, firstFactor:Double):(Optimal,Double) = {
     val v = Utils.randomVector(bound,dim)
     (Optimal(v,ObjectiveFunction.deJongObjective(v)),(bound.upper - bound.lower) * firstFactor)
@@ -43,7 +39,12 @@ object AdaptiveRandomSearch {
           size = size / smallFactor
         }
       } else {
-        (current, size) = lesserCost(size, largeSize, step, largeStep)
+        if (step.cost >= largeStep.cost){
+          current = largeStep
+          size = largeSize
+        }else{
+          current = step
+        }
         count = 0
       }
     }

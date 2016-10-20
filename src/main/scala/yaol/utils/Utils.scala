@@ -17,4 +17,5 @@ object Utils {
 
   def randomVector(bound:Bound, dim:Int):Array[Double] =
     Array.tabulate(dim){ _  => randomBounded(bound) }
+
 }
