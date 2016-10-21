@@ -3,14 +3,14 @@
   */
 package yaol.utils
 
-import yaol.generic.Bound
+import yaol.generic._
 
 object Utils {
   def randomBounded(lowerBound:Double,upperBound:Double):Double =
     lowerBound + (scala.util.Random.nextDouble * (upperBound - lowerBound))
 
   def randomVector(lowerBound:Double,upperBound:Double, dim:Int):Array[Double] =
-    Array.tabulate(dim){ _  => randomBounded(lowerBound,upperBound) }
+    Array.fill(dim)(randomBounded(lowerBound,upperBound))
 
   def randomBounded(bound: Bound):Double =
     bound.lower + (scala.util.Random.nextDouble * (bound.upper - bound.lower))
