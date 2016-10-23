@@ -16,10 +16,13 @@ object Utils {
     bound.lower + (scala.util.Random.nextDouble * (bound.upper - bound.lower))
 
   def randomVector(bound:Bound, dim:Int):Array[Double] =
-    Array.tabulate(dim){ _  => randomBounded(bound) }
+    Array.fill(dim)(randomBounded(bound))
 
   def randomBinary(dim:Int):Array[Int] =
-    Array.tabulate(dim){ _ => scala.util.Random.nextInt(2) }
+    Array.fill(dim)(scala.util.Random.nextInt(2))
+
+  def randomPermutation(length:Int):IndexedSeq[Int] = 
+    scala.util.Random.shuffle((0 to length))
 
 
 }
