@@ -14,12 +14,12 @@ object StochasticHillClimbing {
     val randomIndex = scala.util.Random.nextInt(vector.size)
     val mutation = if (vector(randomIndex) == 0) 1 else 0
     v2(randomIndex) = mutation
-    OptimalInt(v2,ObjectiveFunction.oneMax(v2))
+    OptimalInt(v2, ObjectiveFunction.oneMax(v2))
   }
 
   private def initCurrentVector(positiveBits:Int):OptimalInt = {
     val v = Utils.randomBinary(positiveBits)
-    OptimalInt(v,ObjectiveFunction.oneMax(v))
+    OptimalInt(v, ObjectiveFunction.oneMax(v))
   }
 
   private def loop(current:OptimalInt, positiveBits:Int, maxIteration:Int):OptimalInt = {

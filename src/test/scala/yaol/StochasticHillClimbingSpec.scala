@@ -10,6 +10,6 @@ class StochasticHillClimbingSpec extends FlatSpec with Matchers {
 
   "A Stochastic Hill Climbing search " should "return a nuber close to the positives bits" in {
     val o = StochasticHillClimbing.search(positivesBits, maxIteration)
-    o.cost should be > (positivesBits - 10) 
+    o.cost should be > (positivesBits - 10.0)
   }
 }

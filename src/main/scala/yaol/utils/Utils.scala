@@ -21,8 +21,18 @@ object Utils {
   def randomBinary(dim:Int):Array[Int] =
     Array.fill(dim)(scala.util.Random.nextInt(2))
 
-  def randomPermutation(length:Int):IndexedSeq[Int] = 
+  def randomPermutation(length:Int):IndexedSeq[Int] =
     scala.util.Random.shuffle((0 to length))
 
+  def randomWithExclusion(n:Int,x:Int):Int = {
+    def loop(n:Int,r:Int,x:Int):Int =
+      if (r != x) r else loop(n,scala.util.Random.nextInt(n),x)
+    loop(n,scala.util.Random.nextInt(n),x)
+  }
 
+  def randomWithExclusion(n:Int,xs:Array[Int]):Int = {
+    def loop(n:Int,r:Int,xs:Array[Int]):Int =
+      if (xs contains r) r else loop(n,scala.util.Random.nextInt(n),xs)
+    loop(n,scala.util.Random.nextInt(n),xs)
+  }
 }
